@@ -1,0 +1,96 @@
+﻿@model SeasonModel
+
+@{
+    ViewData["Title"] = "Season Form";
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+<div class="card bg-black">
+    <div class="card-body border border-2">
+        <h5 class="card-title text-danger">Season Form</h5>
+
+        
+        <form method="post">
+
+            <input type="hidden" asp-for="SeasonID">
+
+            <input type="hidden" asp-for="SeasonDate">
+
+            <input type="hidden" asp-for="SeriesID" value="@ViewBag.SeriesID">
+
+            @if (Model.SeasonID != null)
+            {
+                <input type="hidden" asp-for="SeasonImage" id="ExistingSeasonImage" value="@ViewBag.ExistingImage">
+            }
+
+            <label for="SeasonNumber" class="text-white mb-2">Season Number</label><span class="text-danger">*</span>
+            <div class="mb-4 col-md-4">
+                <input type="number" class="form-control bg-black text-white" asp-for="SeasonNumber" placeholder="Season Number">
+                <span asp-validation-for="SeasonNumber" class="text-danger"></span>
+            </div>
+
+            <label for="SeasonImage" class="text-white mb-2">Image</label><span class="text-danger">*</span>
+            <div>
+                <input type="file" class="bg-black text-white" asp-for="SeasonImage" id="SeasonImage"
+                    style="display : none ; visibility : none;" onchange="getImage(this.value);">
+            </div>
+
+            <div>
+                <label class="btn mb-4" for="SeasonImage"
+                        style="background-color: white; color: black; border: 1px solid black;">
+                            Choose Image
+                </label>
+                <span id="displayImage" class="text-white">
+                    @(string.IsNullOrEmpty(ViewBag.ExistingImage) ? "No image selected" : ViewBag.ExistingImage)
+                </span>
+                <span asp-validation-for="SeasonImage" class="text-danger"></span>
+            </div>
+
+            <label for="SeasonDescription" class="text-white mb-2">Season Description</label><span class="text-danger">*</span>
+            <div class="mb-4">
+                <textarea class="form-control bg-black text-white" asp-for="SeasonDescription" placeholder="Season Description"></textarea>
+                <span asp-validation-for="SeasonDescription" class="text-danger"></span>
+            </div>
+
+            <label for="SeriesName" class="text-white mb-2">Series Name : </label>
+            <span class="text-white">
+                @ViewBag.SeriesName (ID: @ViewBag.SeriesID)
+            </span>
+
+            <div class="text-center">
+                <button class="btn btn-danger" asp-controller="Season" asp-action="SeasonSave" type="submit">Save</button>
+                <a class="btn btn-outline-secondary" asp-controller="Season" asp-action="SeasonList">
+                    <i class="ri-arrow-left-line"></i> Back
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function getImage(imagepath)
+    {
+        var newImagePath = imagepath.split("\\").pop();
+
+        var existingImage = "@ViewBag.ExistingImage";
+
+        if (newImagePath !== existingImage)
+        {
+            $('#displayImage').html(newImagePath);
+            $('#ExistingSeasonImage').val(newImagePath);
+        }
+    }
+</script>
+

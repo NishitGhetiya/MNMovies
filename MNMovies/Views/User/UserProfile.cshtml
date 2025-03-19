@@ -1,0 +1,64 @@
+﻿@using System.Data;
+@model UserModel;
+
+@{
+    ViewData["Title"] = "User Profile";
+    Layout = Model.Role ? "~/Views/Shared/_Layout_Admin.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg" style="max-width: 600px; margin: auto;">
+        <div class="card-header bg-danger text-white text-center">
+            <h3>Profile</h3>
+        </div>
+        <div class="card-body">
+
+            <table class="table table-bordered">
+                @* <tr>
+                    <th style="width: 40%; background-color: #f8f9fa;">ID</th>
+                    <td>@Model.UserID</td>
+                </tr> *@
+                <tr>
+                    <th style="background-color: #f8f9fa;">Name</th>
+                    <td>@Model.UserName</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #f8f9fa;">Password</th>
+                    <td>@Model.Password</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #f8f9fa;">Email</th>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #f8f9fa;">Mobile No</th>
+                    <td>@Model.MobileNo</td>
+                </tr>
+                <tr>
+                    <th style="background-color: #f8f9fa;">Role</th>
+                    <td>
+                        @if (Model.Role)
+                        {
+                            <span class="badge bg-success">Admin</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">User</span>
+                        }
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

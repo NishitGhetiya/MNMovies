@@ -1,0 +1,186 @@
+﻿@model MovieModel
+
+@{
+    ViewData["Title"] = "Movie Form";
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+<div class="card bg-black">
+    <div class="card-body border border-2">
+        <h5 class="card-title text-danger">Movie Form</h5>
+
+        <form method="post">
+
+            <input type="hidden" asp-for="MovieID">
+
+            <input type="hidden" asp-for="MovieDate">
+
+            @if (Model.MovieID != null)
+            {
+                <input type="hidden" asp-for="MovieImage" id="ExistingMovieImage" value="@ViewBag.ExistingImage">
+                <input type="hidden" asp-for="MovieVideo" id="ExistingMovieVideo" value="@ViewBag.ExistingVideo">
+            }
+
+            <label for="MovieName" class="text-white mb-2">Movie Name</label><span class="text-danger">*</span>
+            <div class="mb-4">
+                <input type="text" class="form-control bg-black text-white" asp-for="MovieName" placeholder="Enter Name">
+                <span asp-validation-for="MovieName" class="text-danger"></span>
+            </div>
+
+            <label for="MovieImage" class="text-white mb-2">Image</label><span class="text-danger">*</span>
+            <div>
+                <input type="file" class="bg-black text-white" asp-for="MovieImage" id="MovieImage"
+                       style="display : none ; visibility : none;" onchange="getImage(this.value);">
+            </div>
+
+            <div>
+                <label class="btn mb-4" for="MovieImage"
+                       style="background-color: white; color: black; border: 1px solid black;">
+                    Choose Image
+                </label>
+                <span id="displayImage" class="text-white">
+                    @(string.IsNullOrEmpty(ViewBag.ExistingImage) ? "No image selected" : ViewBag.ExistingImage)
+                </span>
+                <span asp-validation-for="MovieImage" class="text-danger"></span>
+            </div>
+
+            <label for="MovieVideo" class="text-white mb-2">Video</label><span class="text-danger">*</span>
+            <div>
+                <input type="file" class="bg-black text-white" asp-for="MovieVideo" id="MovieVideo"
+                       style="display : none ; visibility : none;" onchange="getVideo(this.value);">
+            </div>
+
+            <div>
+                <label class="btn mb-4" for="MovieVideo"
+                       style="background-color: white; color: black; border: 1px solid black;">
+                    Choose Video
+                </label>
+                <span id="displayVideo" class="text-white">
+                    @(string.IsNullOrEmpty(ViewBag.ExistingVideo) ? "No video selected" : ViewBag.ExistingVideo)
+                </span>
+                <span asp-validation-for="MovieVideo" class="text-danger"></span>
+            </div>
+
+            <label for="TypeOfMovie" class="text-white mb-2">Type Of Movie</label><span class="text-danger">*</span>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <select class="form-select bg-black text-white" asp-for="TypeOfMovie" aria-label="TypeOfMovie">
+                        <option value="Only On MNMovies">Only On MNMovies</option>
+                        <option value="Animation">Animation</option>
+                    </select>
+                    <span asp-validation-for="TypeOfMovie" class="text-danger"></span>
+                </div>
+            </div>
+
+            <label for="MovieCategory" class="text-white mb-2">Movie Category</label><span class="text-danger">*</span>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <select class="form-select bg-black text-white" asp-for="MovieCategory" aria-label="MovieCategory">
+                        <option value="Romentic">Romentic</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Action">Action</option>
+                        <option value="Crime">Crime</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Animation">Animation</option>
+                    </select>
+                    <span asp-validation-for="MovieCategory" class="text-danger"></span>
+                </div>
+            </div>
+
+            <label for="MovieType" class="text-white mb-2">Movie Type</label><span class="text-danger">*</span>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <select class="form-select bg-black text-white" asp-for="MovieType" aria-label="MovieType">
+                        <option value="Bollywood">Bollywood</option>
+                        <option value="Hollywood">Hollywood</option>
+                        <option value="Dhollywood">Dhollywood</option>
+                        <option value="Tollywood">Tollywood</option>
+                    </select>
+                    <span asp-validation-for="MovieType" class="text-danger"></span>
+                </div>
+            </div>
+
+            <label for="MovieLanguage" class="text-white mb-2">Movie Language</label><span class="text-danger">*</span>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <select class="form-select bg-black text-white" asp-for="MovieLanguage" aria-label="MovieLanguage">
+                        <option value="Gujrati">ગુજરાતી</option>
+                        <option value="Hindi">हिंदी</option>
+                        <option value="Tamil">தமிழ்</option>
+                        <option value="Telugu">తెలుగు</option>
+                        <option value="Kannada">ಕನ್ನಡ</option>
+                        <option value="Malayalam">മലയാളം</option>
+                        <option value="English">English</option>
+                        <option value="Spanish">Español</option>
+                        <option value="French">Français</option>
+                        <option value="German">Deutsch</option>
+                        <option value="Russian">Русский</option>
+                        <option value="Korean">한국어</option>
+                        <option value="Japanese">日本語</option>
+                        <option value="Chinese">中文</option>
+                        <option value="Arabic">العربية</option>
+                        <option value="Italian">Italiano</option>
+                    </select>
+                    <span asp-validation-for="MovieLanguage" class="text-danger"></span>
+                </div>
+            </div>
+
+            <label for="MovieDescription" class="text-white mb-2">Movie Description</label><span class="text-danger">*</span>
+            <div class="mb-4">
+                <textarea class="form-control bg-black text-white" asp-for="MovieDescription" placeholder="Movie Description"></textarea>
+                <span asp-validation-for="MovieDescription" class="text-danger"></span>
+            </div>
+
+            <label for="MovieLength" class="text-white mb-2">Movie Length</label><span class="text-danger">*</span>
+            <div class="mb-4 col-md-4">
+                <input type="text" class="form-control bg-black text-white" asp-for="MovieLength" placeholder="Movie Length">
+                <span asp-validation-for="MovieLength" class="text-danger"></span>
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-danger" asp-controller="Movie" asp-action="MovieSave" type="submit">Save</button>
+                <a class="btn btn-outline-secondary" asp-controller="Movie" asp-action="MovieList">
+                    <i class="ri-arrow-left-line"></i> Back
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function getImage(imagepath) {
+        var newImagePath = imagepath.split("\\").pop();
+
+        var existingImage = "@ViewBag.ExistingImage";
+
+        if (newImagePath !== existingImage) {
+            $('#displayImage').html(newImagePath);
+            $('#ExistingMovieImage').val(newImagePath);
+        }
+    }
+
+    function getVideo(videopath) {
+        var newVideoPath = videopath.split("\\").pop();
+
+        var existingVideo = "@ViewBag.ExistingVideo";
+
+        if (newVideoPath !== existingVideo) {
+            $('#displayVideo').html(newVideoPath);
+            $('#ExistingMovieVideo').val(newVideoPath);
+        }
+    }
+</script>

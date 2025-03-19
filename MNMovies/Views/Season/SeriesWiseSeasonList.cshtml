@@ -1,0 +1,159 @@
+﻿@using System.Data;
+@model List<MNMovies.Models.SeasonModel>;
+
+@{
+    ViewData["Title"] = "Season List";
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+
+<div class="card bg-black">
+    <div class="card-body">
+        <h5 class="card-title text-white mb-3">Season List</h5>
+      
+        <div>
+            <a class="btn mb-3" asp-controller="Season" asp-action="SeasonList" role="button"
+               style="background-color: white; color: black; border: 1px solid black;">
+
+                <h4>
+                    Show All Seasons
+                </h4>
+            </a>
+            <a class="btn mb-3" asp-controller="Series" asp-action="SeriesList" role="button"
+               style="background-color: white; color: black; border: 1px solid black;">
+
+                <h4>
+                    Show Series
+                </h4>
+            </a>
+        </div>
+
+        <table class="table text-white table-dark table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th>
+                        Season Number
+                    </th>
+                    <th>
+                        Series Name
+                    </th>
+                    <th>
+                        Season Poster
+                    </th>
+                    <th>
+                        Season Description
+                    </th>
+                    <th>
+                        Season Date
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                    <th>
+                        Episode
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (SeasonModel season in Model)
+                {
+                    <tr class="text-center">
+                        <td>
+                            @season.SeasonNumber
+                        </td>
+                        <td>
+                            @season.SeriesName
+                        </td>
+                        <td>
+                            <img src="./assets/img/season_img/@season.SeasonImage" style="width:150px" />
+                        </td>
+                        <td>
+                            @{
+                                string shortDesc = season.SeasonDescription.Length > 50
+                                ? season.SeasonDescription.Substring(0, 50) + "..."
+                                : season.SeasonDescription;
+                            }
+                            <span id="shortDesc_@season.SeasonID">@shortDesc</span>
+                            <span id="fullDesc_@season.SeasonID" style="display:none;">@season.SeasonDescription</span>
+                            <br>
+                            @if (season.SeasonDescription.Length > 50)
+                            {
+                                <a href="javascript:void(0);" class="text-info text-decoration-none" onclick="toggleDescription(@season.SeasonID)" id="toggleBtn_@season.SeasonID">More</a>
+                            }
+                        </td>
+                        <td>
+                            @season.SeasonDate
+                        </td>
+                        <td>
+
+                            <a class="btn btn-outline-warning" asp-controller="Season" asp-action="SeasonAddEdit" asp-route-SeasonID="@season.SeasonID" asp-route-SeriesID="@season.SeriesID" role="button">
+
+                                <h4>
+                                    <i class="ri-edit-2-line"></i>
+                                </h4>
+                            </a>
+
+                            <form method="post" asp-controller="Season" asp-action="SeasonDelete" style="display:inline;" onsubmit="return confirmDelete(event, this);">
+                                <input type="hidden" name="SeasonID" value="@season.SeasonID" />
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <h4>
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </h4>
+                                </button>
+                            </form>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-secondary" asp-controller="Episode" asp-action="SeasonWiseEpisodeList" asp-route-SeasonID="@season.SeasonID" role="button"
+                               style="background-color: white; color: black; border: 1px solid black; margin-bottom: 5px;">
+
+                                <h6>
+                                    View Episodes
+                                </h6>
+                            </a>
+                            <a class="btn btn-outline-secondary" asp-controller="Episode" asp-action="EpisodeAddEdit" asp-route-SeasonID="@season.SeasonID" asp-route-SeriesID="@season.SeriesID" role="button"
+                               style="background-color: lightblue; color: black; border: 1px solid black;">
+
+                                <h6>
+                                    Add Episode
+                                </h6>
+                            </a>
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    function toggleDescription(SeasonID) {
+        var shortDesc = document.getElementById("shortDesc_" + SeasonID);
+        var fullDesc = document.getElementById("fullDesc_" + SeasonID);
+        var toggleBtn = document.getElementById("toggleBtn_" + SeasonID);
+
+        if (fullDesc.style.display === "none") {
+            fullDesc.style.display = "inline";
+            shortDesc.style.display = "none";
+            toggleBtn.innerText = "Less";
+        } else {
+            fullDesc.style.display = "none";
+            shortDesc.style.display = "inline";
+            toggleBtn.innerText = "More";
+        }
+    }
+</script>

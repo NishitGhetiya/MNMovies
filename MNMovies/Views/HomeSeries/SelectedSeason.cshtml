@@ -1,0 +1,79 @@
+﻿@{
+    var episodes = ViewBag.Episodes as List<EpisodeModel>;
+}
+@model SeasonModel;
+
+@{
+    ViewData["Title"] = "Season";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <a class="text-white" asp-controller="HomeSeries" asp-action="SelectedSeries" asp-route-SeriesID="@Model.SeriesID">
+                <h4>
+                    <i class="bi bi-arrow-left"></i>
+                </h4>
+            </a>
+        </div>
+
+        <div class="col-6 text-end">
+            <a class="text-white" asp-controller="HomeSeries" asp-action="SelectedSeries" asp-route-SeriesID="@Model.SeriesID">
+                <h4>
+                    <i class="bi bi-x-lg"></i>
+                </h4>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-column align-items-center text-center mb-4" style="border-bottom: 1px solid #FF0000; padding-bottom: 15px;">
+    <!-- Centered Image -->
+
+    <img width="400" height="400" src="@Url.Content("~/assets/img/season_img/" + Model.SeasonImage)" />
+
+    <!-- Centered Details -->
+    <h4 class="text-secondary mt-3">
+        @Model.SeasonDate.ToString("dd MMM yyyy")
+    </h4>
+
+    <h1 class="text-danger mt-1">
+        @Model.SeriesName
+    </h1>
+
+    <h3 class="mt-2">
+        <span>Season</span>
+        <span>@Model.SeasonNumber</span>
+    </h3>
+
+    <h5 class="text-secondary mt-2">@Model.SeasonDescription</h5>
+</div>
+
+@foreach (EpisodeModel episode in episodes)
+{
+    <div class="d-flex align-items-center mb-4" style="border-bottom: 1px solid #ddd; padding-bottom: 15px;">
+        <!-- Episode Video -->
+        <video width="250" height="200" class="me-3" controls poster="@Url.Content("~/assets/img/episode_img/" + episode.EpisodeImage)">
+            <source src="@Url.Content("~/assets/video/episode_video/" + episode.EpisodeVideo)" />
+        </video>
+        <!-- Episode Details -->
+        <div>
+            <h4 class="text-white">
+                @episode.EpisodeName
+            </h4>
+
+            <h4 class="text-secondary">
+                <span>S</span><span>@episode.SeasonNumber</span>
+                <span>E</span><span>@episode.EpisodeNumber . </span>
+                <span>@episode.EpisodeDate.ToString("dd MMM yyyy") .</span>
+                <span>@episode.EpisodeLength</span>
+            </h4>
+
+            <p class="text-secondary">@episode.EpisodeDescription</p>
+            
+        </div>
+    </div>
+}

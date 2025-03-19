@@ -1,0 +1,101 @@
+﻿@{
+    var filteredSeries = ViewBag.FilteredSeries as List<SeriesModel>;
+}
+@{
+    ViewData["Title"] = "Series";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 mb-5">
+            <a class="text-white" asp-controller="HomeSeries" asp-action="Series">
+                <h4>
+                    <i class="bi bi-arrow-left"></i>
+                </h4>
+            </a>
+        </div>
+
+        <div class="col-6 text-end mb-5">
+            <a class="text-white" asp-controller="HomeSeries" asp-action="Series">
+                <h4>
+                    <i class="bi bi-x-lg"></i>
+                </h4>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    @if (filteredSeries != null && filteredSeries.Any())
+    {
+        <div class="owl-carousel owl-theme">
+            @foreach (SeriesModel series in filteredSeries)
+            {
+                <div class="item">
+                    <div class="card bg-black" onclick="incrementViews(@series.SeriesID)">
+                        <a class="text-decoration-none" asp-controller="HomeSeries" asp-action="SelectedSeries" asp-route-SeriesID="@series.SeriesID">
+                            <img height="250" src="~/assets/img/series_img/@series.SeriesImage" />
+                            <h3 class="text-danger text-center mt-2">@series.SeriesName</h3>
+                            <h4 class="text-secondary text-center mt-1">
+                                <span>@series.SeriesCategory .</span>
+                                <span>@series.SeriesLanguage</span>
+                            </h4>
+                            <h4 class="text-secondary text-center">@series.SeriesType</h4>
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center text-white">
+            <h3>No Results Found</h3>
+        </div>
+    }
+</div>
+
+
+<!--Javascript Jquery-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--Owl Carousel min.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--Owl Carousel init-->
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: false,
+        margin: 10,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    })
+</script>
+
+<script>
+    function incrementViews(SeriesID) {
+        $.ajax({
+            url: `https://localhost:44301/api/Series/IncrementViews/${SeriesID}`,
+            method: "POST",
+            success: function (response) {
+                console.log(response.message);
+            },
+            error: function (xhr) {
+                console.error("Failed to increment views:", xhr.responseText);
+            }
+        });
+    }
+</script>

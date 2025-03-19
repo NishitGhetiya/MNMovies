@@ -1,0 +1,245 @@
+﻿@{
+    var latestMovies = ViewBag.LatestMovies as List<MovieModel>;
+    var latestSeries = ViewBag.LatestSeries as List<SeriesModel>;
+
+    var latestMoviesForSlider = ViewBag.LatestMoviesForSlider as List<MovieModel>;
+    var topMoviesForSlider = ViewBag.TopMoviesForSlider as List<MovieModel>;
+
+    var latestSeriesForSlider = ViewBag.LatestSeriesForSlider as List<SeriesModel>;
+    var topSeriesForSlider = ViewBag.TopSeriesForSlider as List<SeriesModel>;
+
+}
+@{
+    ViewData["Title"] = "Home";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="carouselExampleAutoplaying" class="carousel slide w-75 mx-auto shadow-lg rounded" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+        <!-- latestMoviesForSlider -->
+        @foreach (MovieModel movie in latestMoviesForSlider)
+        {
+            <div class="carousel-item active" onclick="incrementViewsForMovie(@movie.MovieID)">
+                <a class="text-decoration-none" asp-controller="HomeMovie" asp-action="SelectedMovie" asp-route-MovieID="@movie.MovieID">
+                    <div class="row align-items-center">
+                        <!-- Image on the Left -->
+                        <div class="col-md-6" style="border-right: 1px solid white;">
+                            <img style="width: 100%; max-height: 450px; object-fit: contain; border-radius: 10px; background-color: #000;"
+                                 src="./assets/img/movie_img/@movie.MovieImage"
+                                 class="d-block mx-auto" />
+                        </div>
+                        <!-- Details on the Right -->
+                        <div class="col-md-5 d-flex flex-column justify-content-center text-center">
+                            <h1 class="text-danger">@movie.MovieName</h1>
+                            <h4 class="text-secondary">
+                                <span>@movie.MovieDate.Year</span> |
+                                <span>@movie.MovieCategory</span> |
+                                <span>@movie.MovieLength</span> |
+                                <span>@movie.MovieLanguage</span>
+                            </h4>
+                            <h4 class="text-secondary mt-2">
+                                <i class="bi bi-eye-fill" style="font-size:24px"></i> @movie.MovieViews
+                            </h4>
+                            <h5 class="text-secondary mt-2">
+                                This is a @movie.MovieType Movie, @movie.MovieDescription
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+        <!-- topMoviesForSlider -->
+        @foreach (MovieModel movie in topMoviesForSlider)
+        {
+            <div class="carousel-item" onclick="incrementViewsForMovie(@movie.MovieID)">
+                <a class="text-decoration-none" asp-controller="HomeMovie" asp-action="SelectedMovie" asp-route-MovieID="@movie.MovieID">
+                    <div class="row align-items-center">
+                        <div class="col-md-6" style="border-right: 1px solid white;">
+                            <img style="width: 100%; max-height: 450px; object-fit: contain; border-radius: 10px; background-color: #000;"
+                                 src="./assets/img/movie_img/@movie.MovieImage"
+                                 class="d-block mx-auto" />
+                        </div>
+                        <div class="col-md-5 d-flex flex-column justify-content-center text-center">
+                            <h1 class="text-danger">@movie.MovieName</h1>
+                            <h4 class="text-secondary">
+                                <span>@movie.MovieDate.Year</span> |
+                                <span>@movie.MovieCategory</span> |
+                                <span>@movie.MovieLength</span> |
+                                <span>@movie.MovieLanguage</span>
+                            </h4>
+                            <h4 class="text-secondary mt-2">
+                                <i class="bi bi-eye-fill" style="font-size:24px"></i> @movie.MovieViews
+                            </h4>
+                            <h5 class="text-secondary mt-2">
+                                This is a @movie.MovieType Movie, @movie.MovieDescription
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+        <!-- latestSeriesForSlider -->
+        @foreach (SeriesModel series in latestSeriesForSlider)
+        {
+            <div class="carousel-item" onclick="incrementViewsForSeries(@series.SeriesID)">
+                <a class="text-decoration-none" asp-controller="HomeSeries" asp-action="SelectedSeries" asp-route-SeriesID="@series.SeriesID">
+                    <div class="row align-items-center">
+                        <div class="col-md-6" style="border-right: 1px solid white;">
+                            <img style="width: 100%; max-height: 450px; object-fit: contain; border-radius: 10px; background-color: #000;"
+                                 src="./assets/img/series_img/@series.SeriesImage"
+                                 class="d-block mx-auto" />
+                        </div>
+                        <div class="col-md-5 d-flex flex-column justify-content-center text-center">
+                            <h1 class="text-danger">@series.SeriesName</h1>
+                            <h4 class="text-secondary">
+                                <span>@series.SeriesDate.Year</span> |
+                                <span>@series.SeriesCategory</span> |
+                                <span>@series.SeriesLanguage</span>
+                            </h4>
+                            <h4 class="text-secondary mt-2">
+                                <i class="bi bi-eye-fill" style="font-size:24px"></i> @series.SeriesView
+                            </h4>
+                            <h5 class="text-secondary mt-2">
+                                This is a @series.SeriesType Series, @series.SeriesDescription
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+        <!-- topSeriesForSlider -->
+        @foreach (SeriesModel series in topSeriesForSlider)
+        {
+            <div class="carousel-item" onclick="incrementViewsForSeries(@series.SeriesID)">
+                <a class="text-decoration-none" asp-controller="HomeSeries" asp-action="SelectedSeries" asp-route-SeriesID="@series.SeriesID">
+                    <div class="row align-items-center">
+                        <div class="col-md-6" style="border-right: 1px solid white;">
+                            <img style="width: 100%; max-height: 450px; object-fit: contain; border-radius: 10px; background-color: #000;"
+                                 src="./assets/img/series_img/@series.SeriesImage"
+                                 class="d-block mx-auto" />
+                        </div>
+                        <div class="col-md-5 d-flex flex-column justify-content-center text-center">
+                            <h1 class="text-danger">@series.SeriesName</h1>
+                            <h4 class="text-secondary">
+                                <span>@series.SeriesDate.Year</span> |
+                                <span>@series.SeriesCategory</span> |
+                                <span>@series.SeriesLanguage</span>
+                            </h4>
+                            <h4 class="text-secondary mt-2">
+                                <i class="bi bi-eye-fill" style="font-size:24px"></i> @series.SeriesView
+                            </h4>
+                            <h5 class="text-secondary mt-2">
+                                This is a @series.SeriesType Series, @series.SeriesDescription
+                            </h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+        <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+<h2 class="mb-3 mt-5">Latest Movies</h2>
+
+<div class="container-fluid">
+    <div class="owl-carousel owl-theme">
+        @foreach (MovieModel movie in latestMovies)
+        {
+            <div class="item">
+                <div class="card bg-black" onclick="incrementViewsForMovie(@movie.MovieID)">
+                    <a asp-controller="HomeMovie" asp-action="SelectedMovie" asp-route-MovieID="@movie.MovieID">
+                        <img height="250" src="./assets/img/movie_img/@movie.MovieImage" />
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<h2 class="mb-3 mt-3">Latest Series</h2>
+
+<div class="container-fluid">
+    <div class="owl-carousel owl-theme">
+        @foreach (SeriesModel series in latestSeries)
+        {
+            <div class="item">
+                <div class="card bg-black" onclick="incrementViewsForSeries(@series.SeriesID)">
+                    <a asp-controller="HomeSeries" asp-action="SelectedSeries" asp-route-SeriesID="@series.SeriesID">
+                        <img height="250" src="./assets/img/series_img/@series.SeriesImage" />
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<!--Javascript Jquery-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--Owl Carousel min.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--Owl Carousel init-->
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: false,
+        margin: 10,
+        nav: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    })
+</script>
+
+
+<script>
+    function incrementViewsForMovie(MovieID) {
+        $.ajax({
+            url: `https://localhost:44301/api/Movie/IncrementViews/${MovieID}`,
+            method: "POST",
+            success: function (response) {
+                console.log(response.message);
+            },
+            error: function (xhr) {
+                console.error("Failed to increment views:", xhr.responseText);
+            }
+        });
+    }
+    function incrementViewsForSeries(SeriesID) {
+        $.ajax({
+            url: `https://localhost:44301/api/Series/IncrementViews/${SeriesID}`,
+            method: "POST",
+            success: function (response) {
+                console.log(response.message);
+            },
+            error: function (xhr) {
+                console.error("Failed to increment views:", xhr.responseText);
+            }
+        });
+    }
+</script>

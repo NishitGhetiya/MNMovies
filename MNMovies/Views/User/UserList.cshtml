@@ -1,0 +1,119 @@
+﻿@using System.Data;
+@model List<MNMovies.Models.UserModel>;
+
+@{
+    ViewData["Title"] = "User List";
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+
+<div class="card bg-black">
+    <div class="card-body">
+        <h5 class="card-title text-white">User List</h5>
+
+        <div class="text-end">
+            <a class="btn mb-3" asp-controller="User" asp-action="UserAddEdit" role="button"
+               style="background-color: lightblue; color: black; border: 1px solid black;">
+
+                <h4>
+                    Add User
+                </h4>
+            </a>
+        </div>
+
+        <table class="table text-white table-dark table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                        Mobile No
+                    </th>
+                    <th>
+                        Role
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (UserModel user in Model)
+                {
+                    <tr class="text-center">
+                        <td>
+                            @user.UserID
+                        </td>
+                        <td>
+                            @user.UserName
+                        </td>
+                        <td>
+                            @user.Email
+                        </td>
+                        <td>
+                            @{
+                                var password = user.Password.ToString();
+                                var maskedPassword = password.Length <= 3 ? password : password.Substring(0, 3) + new string('*', password.Length - 3);
+                            }
+                            @maskedPassword
+                        </td>
+                        <td>
+                            @user.MobileNo
+                        </td>
+                        <td>
+                            @if(user.Role == true)
+                            {
+                                Write("Admin");
+                            }
+                            @if(user.Role == false)
+                            {
+                                Write("User");
+                            }
+                        </td>
+                        <td>
+
+                            <a class="btn btn-outline-warning" asp-controller="User" asp-action="UserAddEdit" asp-route-UserID="@user.UserID" role="button">
+
+                                <h4>
+                                    <i class="ri-edit-2-line"></i>
+                                </h4>
+                            </a>
+
+                            <form method="post" asp-controller="User" asp-action="UserDelete" style="display:inline;" onsubmit="return confirmDelete(event, this);">
+                                <input type="hidden" name="UserID" value="@user.UserID" />
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <h4>
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </h4>
+                                </button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

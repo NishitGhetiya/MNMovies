@@ -1,0 +1,72 @@
+﻿@model UserModel
+
+@{
+    ViewData["Title"] = "User Form";
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";  
+}
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+<div class="card bg-black">
+    <div class="card-body border border-2">
+        <h5 class="card-title text-danger">Profile Form</h5>
+
+        <form method="post">
+
+            <input type="hidden" asp-for="UserID">
+
+            <label for="UserName" class="text-white mb-2">Name</label><span class="text-danger">*</span>
+            <div class="mb-3">
+                <input type="text" class="form-control bg-black text-white" asp-for="UserName" placeholder="Enter Name">
+                
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <label for="Email" class="text-white mb-2">Email</label><span class="text-danger">*</span>
+            <div class="mb-3">
+                <input type="email" class="form-control bg-black text-white" asp-for="Email" placeholder="Enter Proper Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <label for="Password" class="text-white mb-2">Password</label><span class="text-danger">*</span>
+            <div class="mb-3">
+                <input type="password" class="form-control bg-black text-white" asp-for="Password" placeholder="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <label for="MobileNo" class="text-white mb-2">Mobile No</label><span class="text-danger">*</span>
+            <div class="mb-3">
+                <input type="number" class="form-control bg-black text-white" asp-for="MobileNo" placeholder="Mobile No">
+                <span asp-validation-for="MobileNo" class="text-danger"></span>
+            </div>
+
+            <label for="Role" class="text-white mb-2">Role</label><span class="text-danger">*</span>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <select class="form-select bg-black text-white" asp-for="Role" aria-label="Role">
+                        <option value=true>Admin</option>
+                        <option value=false>User</option>
+                    </select>
+                    <span asp-validation-for="Role" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-danger" asp-controller="User" asp-action="UserSave" type="submit">Save</button>
+                <a class="btn btn-outline-secondary" asp-controller="User" asp-action="UserList">
+                    <i class="ri-arrow-left-line"></i> Back
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>

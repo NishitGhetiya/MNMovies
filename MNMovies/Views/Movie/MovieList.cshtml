@@ -1,0 +1,167 @@
+﻿@using System.Data;
+@model List<MNMovies.Models.MovieModel>;
+
+@{
+    ViewData["Title"] = "Movie List";
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+
+<div class="card bg-black">
+    <div class="card-body">
+        <h5 class="card-title text-white">Movie List</h5>
+
+        <div class="text-end">
+            <a class="btn mb-3" asp-controller="Movie" asp-action="MovieAddEdit" role="button"
+               style="background-color: lightblue; color: black; border: 1px solid black;">
+
+                <h4>
+                    Add Movie
+                </h4>
+            </a>
+        </div>
+
+        <table class="table text-white table-dark table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th>
+                        Movie Name
+                    </th>
+                    <th>
+                        Movie Poster
+                    </th>
+                    <th>
+                        Movie Video
+                    </th>
+                    <th>
+                        Type Of Movie
+                    </th>
+                    <th>
+                        Movie Category
+                    </th>
+                    <th>
+                        Movie Type
+                    </th>
+                    <th>
+                        Movie Language
+                    </th>
+                    <th>
+                        Movie Description
+                    </th>
+                    <th>
+                        Movie Length
+                    </th>
+                    <th>
+                        Movie Date
+                    </th>
+                    <th>
+                        Movie Views
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (MovieModel movie in Model)
+                {
+                    <tr class="text-center">
+                        <td>
+                            @movie.MovieName
+                        </td>
+                        <td>
+                            <img src="./assets/img/movie_img/@movie.MovieImage" style="width:150px" />
+                        </td>
+                        <td>
+                            <video width="300px" height="200px" controls><source src="./assets/video/movie_video/@movie.MovieVideo" /></video>
+                        </td>
+                        <td>
+                            @movie.TypeOfMovie
+                        </td>
+                        <td>
+                            @movie.MovieCategory
+                        </td>
+                        <td>
+                            @movie.MovieType
+                        </td>
+                        <td>
+                            @movie.MovieLanguage
+                        </td>
+                        <td>
+                            @{
+                                string shortDesc = movie.MovieDescription.Length > 50
+                                ? movie.MovieDescription.Substring(0, 50) + "..."
+                                : movie.MovieDescription;
+                            }
+                            <span id="shortDesc_@movie.MovieID">@shortDesc</span>
+                            <span id="fullDesc_@movie.MovieID" style="display:none;">@movie.MovieDescription</span>
+                            <br>
+                            @if (movie.MovieDescription.Length > 50)
+                            {
+                                <a href="javascript:void(0);" class="text-info text-decoration-none" onclick="toggleDescription(@movie.MovieID)" id="toggleBtn_@movie.MovieID">More</a>
+                            }
+                        </td>
+                        <td>
+                            @movie.MovieLength
+                        </td>
+                        <td>
+                            @movie.MovieDate
+                        </td>
+                        <td>
+                            @movie.MovieViews
+                        </td>
+                        <td>
+
+                            <a class="btn btn-outline-warning" asp-controller="Movie" asp-action="MovieAddEdit" asp-route-MovieID="@movie.MovieID" role="button">
+
+                                <h4>
+                                    <i class="ri-edit-2-line"></i>
+                                </h4>
+                            </a>
+
+                            <form method="post" asp-controller="Movie" asp-action="MovieDelete" style="display:inline;" onsubmit="return confirmDelete(event, this);">
+                                <input type="hidden" name="MovieID" value="@movie.MovieID" />
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <h4>
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </h4>
+                                </button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function toggleDescription(movieID) {
+        var shortDesc = document.getElementById("shortDesc_" + movieID);
+        var fullDesc = document.getElementById("fullDesc_" + movieID);
+        var toggleBtn = document.getElementById("toggleBtn_" + movieID);
+
+        if (fullDesc.style.display === "none") {
+            fullDesc.style.display = "inline";
+            shortDesc.style.display = "none";
+            toggleBtn.innerText = "Less";
+        } else {
+            fullDesc.style.display = "none";
+            shortDesc.style.display = "inline";
+            toggleBtn.innerText = "More";
+        }
+    }
+</script>

@@ -1,0 +1,156 @@
+﻿@using System.Data;
+@model List<MNMovies.Models.EpisodeModel>;
+
+@{
+    ViewData["Title"] = "Episode List";
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+
+<div class="card bg-black">
+    <div class="card-body">
+        <h5 class="card-title text-white mb-3">Episode List</h5>
+
+        <div>
+            <a class="btn mb-3" asp-controller="Season" asp-action="SeasonList" role="button"
+               style="background-color: white; color: black; border: 1px solid black;">
+
+                <h4>
+                    Show Seasons
+                </h4>
+            </a>
+        </div>
+
+        <table class="table text-white table-dark table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th>
+                        Episode Name
+                    </th>
+                    <th>
+                        Episode Number
+                    </th>
+                    <th>
+                        Season Number
+                    </th>
+                    <th>
+                        Series Name
+                    </th>
+                    <th>
+                        Episode Poster
+                    </th>
+                    <th>
+                        Episode Video
+                    </th>
+                    <th>
+                        Episode Description
+                    </th>
+                    <th>
+                        Episode Length
+                    </th>
+                    <th>
+                        Episode Date
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (EpisodeModel episode in Model)
+                {
+                    <tr class="text-center">
+                        <td>
+                            @episode.EpisodeName
+                        </td>
+                        <td>
+                            @episode.EpisodeNumber
+                        </td>
+                        <td>
+                            @episode.SeasonNumber
+                        </td>
+                        <td>
+                            @episode.SeriesName
+                        </td>
+                        <td>
+                            <img src="./assets/img/episode_img/@episode.EpisodeImage" style="width:150px" />
+                        </td>
+                        <td>
+                            <video width="300px" height="200px" controls><source src="./assets/video/episode_video/@episode.EpisodeVideo" /></video>
+                        </td>
+                        <td>
+                            @{
+                                string shortDesc = episode.EpisodeDescription.Length > 50
+                                ? episode.EpisodeDescription.Substring(0, 50) + "..."
+                                : episode.EpisodeDescription;
+                            }
+                            <span id="shortDesc_@episode.EpisodeID">@shortDesc</span>
+                            <span id="fullDesc_@episode.EpisodeID" style="display:none;">@episode.EpisodeDescription</span>
+                            <br>
+                            @if (episode.EpisodeDescription.Length > 50)
+                            {
+                                <a href="javascript:void(0);" class="text-info text-decoration-none" onclick="toggleDescription(@episode.EpisodeID)" id="toggleBtn_@episode.EpisodeID">More</a>
+                            }
+                        </td>
+                        <td>
+                            @episode.EpisodeLength
+                        </td>
+                        <td>
+                            @episode.EpisodeDate
+                        </td>
+                        <td>
+
+                            <a class="btn btn-outline-warning" asp-controller="Episode" asp-action="EpisodeAddEdit" asp-route-EpisodeID="@episode.EpisodeID" asp-route-SeasonID="@episode.SeasonID" asp-route-SeriesID="@episode.SeriesID" role="button">
+
+                                <h4>
+                                    <i class="ri-edit-2-line"></i>
+                                </h4>
+                            </a>
+
+                            <form method="post" asp-controller="Episode" asp-action="EpisodeDelete" style="display:inline;" onsubmit="return confirmDelete(event, this);">
+                                <input type="hidden" name="EpisodeID" value="@episode.EpisodeID" />
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <h4>
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </h4>
+                                </button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    function toggleDescription(EpisodeID) {
+        var shortDesc = document.getElementById("shortDesc_" + EpisodeID);
+        var fullDesc = document.getElementById("fullDesc_" + EpisodeID);
+        var toggleBtn = document.getElementById("toggleBtn_" + EpisodeID);
+
+        if (fullDesc.style.display === "none") {
+            fullDesc.style.display = "inline";
+            shortDesc.style.display = "none";
+            toggleBtn.innerText = "Less";
+        } else {
+            fullDesc.style.display = "none";
+            shortDesc.style.display = "inline";
+            toggleBtn.innerText = "More";
+        }
+    }
+</script>

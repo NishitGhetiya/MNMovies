@@ -1,0 +1,147 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MNMovies
+build_property.RootNamespace = MNMovies
+build_property.ProjectDir = D:\nishit\Sem 6\Adv.Net\Projects\MNMovies\MNMovies\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\nishit\Sem 6\Adv.Net\Projects\MNMovies\MNMovies
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Episode/EpisodeAddEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBpc29kZVxFcGlzb2RlQWRkRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Episode/EpisodeList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBpc29kZVxFcGlzb2RlTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Episode/SeasonWiseEpisodeList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXBpc29kZVxTZWFzb25XaXNlRXBpc29kZUxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/HomeMovie/Movies.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZU1vdmllXE1vdmllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/HomeMovie/SearchMovie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZU1vdmllXFNlYXJjaE1vdmllLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/HomeMovie/SelectedMovie.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZU1vdmllXFNlbGVjdGVkTW92aWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/HomeSeries/SearchSeries.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVNlcmllc1xTZWFyY2hTZXJpZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/HomeSeries/SelectedSeason.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVNlcmllc1xTZWxlY3RlZFNlYXNvbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/HomeSeries/SelectedSeries.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVNlcmllc1xTZWxlY3RlZFNlcmllcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/HomeSeries/Series.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVNlcmllc1xTZXJpZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Movie/MovieAddEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVcTW92aWVBZGRFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Movie/MovieList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW92aWVcTW92aWVMaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Season/SeasonAddEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vhc29uXFNlYXNvbkFkZEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Season/SeasonList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vhc29uXFNlYXNvbkxpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Season/SeriesWiseSeasonList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2Vhc29uXFNlcmllc1dpc2VTZWFzb25MaXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Series/SeriesAddEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VyaWVzXFNlcmllc0FkZEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Series/SeriesList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2VyaWVzXFNlcmllc0xpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Shared/_Layout_Admin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRfQWRtaW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Shared/_Layout_Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRfTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Shared/_Layout_Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRfUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/User/UserAddEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyQWRkRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/User/UserList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/User/UserLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/User/UserProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/User/UserRegister.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VyUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/nishit/Sem 6/Adv.Net/Projects/MNMovies/MNMovies/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-vknvskli4e

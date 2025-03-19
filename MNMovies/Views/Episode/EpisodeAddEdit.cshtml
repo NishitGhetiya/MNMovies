@@ -1,0 +1,138 @@
+﻿@model EpisodeModel
+
+@{
+    ViewData["Title"] = "Episode Form";
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+<div class="card bg-black">
+    <div class="card-body border border-2">
+        <h5 class="card-title text-danger">Episode Form</h5>
+
+        <form method="post">
+
+            <input type="hidden" asp-for="EpisodeID">
+
+            <input type="hidden" asp-for="EpisodeDate">
+
+            <input type="hidden" asp-for="SeriesID" value="@ViewBag.SeriesID">
+
+            <input type="hidden" asp-for="SeasonID" value="@ViewBag.SeasonID">
+
+            @if (Model.EpisodeID != null)
+            {
+                <input type="hidden" asp-for="EpisodeImage" id="ExistingEpisodeImage" value="@ViewBag.ExistingImage">
+                <input type="hidden" asp-for="EpisodeVideo" id="ExistingEpisodeVideo" value="@ViewBag.ExistingVideo">
+            }
+
+            <label for="EpisodeName" class="text-white mb-2">Episode Name</label>
+            <div class="mb-4">
+                <input type="text" class="form-control bg-black text-white" asp-for="EpisodeName" placeholder="Episode Name">
+            </div>
+
+            <label for="EpisodeNumber" class="text-white mb-2">Episode Number</label><span class="text-danger">*</span>
+            <div class="mb-4 col-md-4">
+                <input type="number" class="form-control bg-black text-white" asp-for="EpisodeNumber" placeholder="Episode Number">
+                <span asp-validation-for="EpisodeNumber" class="text-danger"></span>
+            </div>
+
+            <label for="EpisodeImage" class="text-white mb-2">Image</label><span class="text-danger">*</span>
+            <div>
+                <input type="file" class="bg-black text-white" asp-for="EpisodeImage" id="EpisodeImage"
+                       style="display : none ; visibility : none;" onchange="getImage(this.value);">
+            </div>
+
+            <div>
+                <label class="btn mb-4" for="EpisodeImage"
+                       style="background-color: white; color: black; border: 1px solid black;">
+                    Choose Image
+                </label>
+                <span id="displayImage" class="text-white">
+                    @(string.IsNullOrEmpty(ViewBag.ExistingImage) ? "No image selected" : ViewBag.ExistingImage)
+                </span>
+                <span asp-validation-for="EpisodeImage" class="text-danger"></span>
+            </div>
+
+            <label for="EpisodeVideo" class="text-white mb-2">Video</label><span class="text-danger">*</span>
+            <div>
+                <input type="file" class="bg-black text-white" asp-for="EpisodeVideo" id="EpisodeVideo"
+                       style="display : none ; visibility : none;" onchange="getVideo(this.value);">
+            </div>
+
+            <div>
+                <label class="btn mb-4" for="EpisodeVideo"
+                       style="background-color: white; color: black; border: 1px solid black;">
+                    Choose Video
+                </label>
+                <span id="displayVideo" class="text-white">
+                    @(string.IsNullOrEmpty(ViewBag.ExistingVideo) ? "No video selected" : ViewBag.ExistingVideo)
+                </span>
+                <span asp-validation-for="EpisodeVideo" class="text-danger"></span>
+            </div>
+
+            <label for="EpisodeDescription" class="text-white mb-2">Episode Description</label>
+            <div class="mb-4">
+                <textarea class="form-control bg-black text-white" asp-for="EpisodeDescription" placeholder="Episode Description"></textarea>
+            </div>
+
+            <label for="EpisodeLength" class="text-white mb-2">Episode Length</label><span class="text-danger">*</span>
+            <div class="mb-4 col-md-4">
+                <input type="text" class="form-control bg-black text-white" asp-for="EpisodeLength" placeholder="Episode Length">
+                <span asp-validation-for="EpisodeLength" class="text-danger"></span>
+            </div>
+
+            <label for="SeriesName" class="text-white mb-2">Series Name : </label>
+            <span class="text-white">
+                    @ViewBag.SeriesName (ID: @ViewBag.SeriesID)
+            </span>
+            <br/>
+            <label for="SeasonNumber" class="text-white mb-2">Season Number : </label>
+            <span class="text-white">
+                    @ViewBag.SeasonNumber (ID: @ViewBag.SeasonID)
+            </span>
+
+            <div class="text-center">
+                <button class="btn btn-danger" asp-controller="Episode" asp-action="EpisodeSave" type="submit">Save</button>
+                <a class="btn btn-outline-secondary" asp-controller="Episode" asp-action="EpisodeList">
+                    <i class="ri-arrow-left-line"></i> Back
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    function getImage(imagepath) {
+        var newImagePath = imagepath.split("\\").pop();
+
+        var existingImage = "@ViewBag.ExistingImage";
+
+        if (newImagePath !== existingImage) {
+            $('#displayImage').html(newImagePath);
+            $('#ExistingEpisodeImage').val(newImagePath);
+        }
+    }
+
+    function getVideo(videopath) {
+        var newVideoPath = videopath.split("\\").pop();
+
+        var existingVideo = "@ViewBag.ExistingVideo";
+
+        if (newVideoPath !== existingVideo) {
+            $('#displayVideo').html(newVideoPath);
+            $('#ExistingEpisodeVideo').val(newVideoPath);
+        }
+    }
+</script>

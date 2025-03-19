@@ -1,0 +1,88 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+@model MNMovies.Models.UserLoginModel
+
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+<main class="bg-black">
+    <div class="container">
+
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                        <h3 class="text-danger">MNMovies</h3>
+
+                        <div class="card mb-3 bg-black border border-1">
+
+                            <div class="card-body">
+
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4 text-white">Login to Your Account</h5>
+                                    <p class="text-center small text-white">Enter your username & password to login</p>
+                                </div>
+
+                                <form class="row g-3 needs-validation" asp-action="UserLogin" asp-controller="User" method="post">
+                                    <div class="col-12">
+                                        <label for="UserName" class="form-label text-white">Username</label>
+                                        <input type="text" asp-for="UserName" class="form-control bg-black text-white">
+                                        <span asp-validation-for="UserName" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="Password" class="form-label text-white">Password</label>
+                                        <input type="password" asp-for="Password" class="form-control bg-black text-white">
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+
+                                    @* <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input bg-black" type="checkbox" name="remember" value="true" id="rememberMe">
+                                            <label class="form-check-label text-white" for="rememberMe">Remember me</label>
+                                        </div>
+                                    </div> *@
+
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input bg-black" type="checkbox" name="remember" value="true" id="rememberMe">
+                                            <label class="form-check-label text-white" for="rememberMe">Remember me</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button class="btn btn-danger w-100" type="submit">Login</button>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <p class="small mb-0 text-white">Don't have an account? <a class="text-decoration-none text-danger" asp-controller="User" asp-action="UserRegister">Create an account</a></p>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</main><!-- End #main -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,214 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@{
+    var topTenMovies = ViewBag.TopTenMovies as List<MovieModel>;
+    var topTenSeries = ViewBag.TopTenSeries as List<SeriesModel>;
+    var seasonCounts = ViewBag.SeasonCounts as List<SeasonCountModel>;
+}
+
+<!-- Main Header Section -->
+<div class="d-flex flex-column align-items-center text-center pt-1 pb-3">
+    <h6 class="text-light fw-light mb-2">Welcome Boss On</h6>
+    <h1 class="text-danger fw-bold mb-3">MNMovies</h1>
+    <h6 class="text-light fw-light">Your Movie & Series Platform</h6>
+</div>
+
+<!-- Bootstrap Grid for Movies (Left) & Series (Right) -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Left Side (Movies) -->
+        <div class="col-md-5 p-4 shadow-sm bg-dark text-light rounded mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="text-warning">Total Movies: <span class="text-white">@ViewBag.MovieCount</span></h4>
+                <a class="btn btn-outline-light fw-bold px-4 py-2" asp-controller="Movie" asp-action="MovieList">View All</a>
+            </div>
+
+            <h5 class="text-center text-warning border-bottom pb-2">Top 10 Movies</h5>
+
+            <!-- Graph for Top 10 Movies -->
+            <canvas id="moviesChart" class="mt-3"></canvas>
+
+            <table class="table table-dark table-hover mt-3 rounded">
+                <thead class="table-secondary text-dark">
+                    <tr class="text-center">
+                        <th>Sr. No</th>
+                        <th>Name</th>
+                        <th>Release Date</th>
+                        <th>Views</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (topTenMovies != null)
+                    {
+                        int movieSrNo = 1;
+                        @foreach (MovieModel movie in topTenMovies)
+                        {
+                            <tr class="text-center">
+                                <td>@movieSrNo</td>
+                                <td>@movie.MovieName</td>
+                                <td>@movie.MovieDate.ToString("dd MMM yyyy")</td>
+                                <td>@movie.MovieViews</td>
+                            </tr>
+                            movieSrNo++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Right Side (Series) -->
+        <div class="col-md-5 offset-md-2 p-4 shadow-sm bg-dark text-light rounded mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="text-warning">Total Series: <span class="text-white">@ViewBag.SeriesCount</span></h4>
+                <a class="btn btn-outline-light fw-bold px-4 py-2" asp-controller="Series" asp-action="SeriesList">View All</a>
+            </div>
+
+            <h5 class="text-center text-warning border-bottom pb-2">Top 10 Series</h5>
+
+            <!-- Graph for Top 10 Series -->
+            <canvas id="seriesChart" class="mt-3"></canvas>
+
+            <table class="table table-dark table-hover mt-3 rounded">
+                <thead class="table-secondary text-dark">
+                    <tr class="text-center">
+                        <th>Sr. No</th>
+                        <th>Name</th>
+                        <th>Release Date</th>
+                        <th>Views</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (topTenSeries != null)
+                    {
+                        int seriesSrNo = 1;
+                        @foreach (SeriesModel series in topTenSeries)
+                        {
+                            <tr class="text-center">
+                                <td>@seriesSrNo</td>
+                                <td>
+                                    <a class="text-white text-decoration-none" asp-controller="Season" asp-action="SeriesWiseSeasonList" asp-route-SeriesID="@series.SeriesID">
+                                        @series.SeriesName
+                                    </a>
+                                </td>
+                                <td>@series.SeriesDate.ToString("dd MMM yyyy")</td>
+                                <td>@series.SeriesView</td>
+                            </tr>
+                            seriesSrNo++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Top 10 Series Based On Season Count -->
+<div class="col-md-6 offset-md-3 p-4 shadow-sm mt-3 bg-dark text-light rounded">
+    <h5 class="text-center text-warning border-bottom pb-2">Top 10 Series Based On Season Count</h5>
+
+    <!-- Graph for Top 10 Series Based on Season Count -->
+    <canvas id="seasonChart" class="mt-3"></canvas>
+
+    <table class="table table-dark table-hover mt-3 rounded">
+        <thead class="table-secondary text-dark">
+            <tr class="text-center">
+                <th>Sr. No</th>
+                <th>Name</th>
+                <th>Seasons</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (seasonCounts != null)
+            {
+                int seasonSrNo = 1;
+                @foreach (SeasonCountModel season in seasonCounts)
+                {
+                    <tr class="text-center">
+                        <td>@seasonSrNo</td>
+                        <td>
+                            <a class="text-white text-decoration-none" asp-controller="Season" asp-action="SeriesWiseSeasonList" asp-route-SeriesID="@season.SeriesID">
+                                @season.SeriesName
+                            </a>
+                        </td>
+                        <td>@season.SeasonCount</td>
+                    </tr>
+                    seasonSrNo++;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Top 10 Movies Graph
+        var moviesCtx = document.getElementById('moviesChart').getContext('2d');
+        var movieLabels = @Html.Raw(Json.Serialize(topTenMovies?.Select(m => m.MovieName)));
+        var movieViews = @Html.Raw(Json.Serialize(topTenMovies?.Select(m => m.MovieViews)));
+
+        if (movieLabels.length > 0) {
+            new Chart(moviesCtx, {
+                type: 'line',
+                data: {
+                    labels: movieLabels,
+                    datasets: [{
+                        label: 'Movie Views',
+                        data: movieViews,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                }
+            });
+        }
+
+        // Top 10 Series Graph
+        var seriesCtx = document.getElementById('seriesChart').getContext('2d');
+        var seriesLabels = @Html.Raw(Json.Serialize(topTenSeries?.Select(s => s.SeriesName)));
+        var seriesViews = @Html.Raw(Json.Serialize(topTenSeries?.Select(s => s.SeriesView)));
+
+        if (seriesLabels.length > 0) {
+            new Chart(seriesCtx, {
+                type: 'line',
+                data: {
+                    labels: seriesLabels,
+                    datasets: [{
+                        label: 'Series Views',
+                        data: seriesViews,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                }
+            });
+        }
+
+        // Top 10 Series Based on Season Count Graph
+        var seasonCtx = document.getElementById('seasonChart').getContext('2d');
+        var seasonLabels = @Html.Raw(Json.Serialize(seasonCounts?.Select(s => s.SeriesName)));
+        var seasonData = @Html.Raw(Json.Serialize(seasonCounts?.Select(s => s.SeasonCount)));
+
+        if (seasonLabels.length > 0) {
+            new Chart(seasonCtx, {
+                type: 'line',
+                data: {
+                    labels: seasonLabels,
+                    datasets: [{
+                        label: 'Seasons Count',
+                        data: seasonData,
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                }
+            });
+        }
+    });
+</script>

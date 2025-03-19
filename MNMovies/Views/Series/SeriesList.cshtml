@@ -1,0 +1,176 @@
+﻿@using System.Data;
+@model List<MNMovies.Models.SeriesModel>;
+
+@{
+    ViewData["Title"] = "Series List";
+}
+@{
+    Layout = "~/Views/Shared/_Layout_Admin.cshtml";
+}
+
+@if (TempData["ErrorMassage"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "@TempData["ErrorMassage"]",
+        });
+    </script>
+}
+
+<div class="card bg-black">
+    <div class="card-body">
+        <h5 class="card-title text-white">Series List</h5>
+
+        <div class="text-end">
+            <a class="btn mb-3" asp-controller="Series" asp-action="SeriesAddEdit" role="button"
+               style="background-color: lightblue; color: black; border: 1px solid black;">
+
+                <h4>
+                    Add Series
+                </h4>
+            </a>
+        </div>
+
+        <table class="table text-white table-dark table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th>
+                        Series Name
+                    </th>
+                    <th>
+                        Series Poster
+                    </th>
+                    <th>
+                        Type Of Series
+                    </th>
+                    <th>
+                        Series Category
+                    </th>
+                    <th>
+                        Series Type
+                    </th>
+                    <th>
+                        Series Language
+                    </th>
+                    <th>
+                        Series Description
+                    </th>
+                    <th>
+                        Series Date
+                    </th>
+                    <th>
+                        Series Views
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                    <th>
+                        Season
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (SeriesModel series in Model)
+                {
+                    <tr class="text-center">
+                        <td>
+                            @series.SeriesName
+                        </td>
+                        <td>
+                            <img src="./assets/img/series_img/@series.SeriesImage" style="width:150px" />
+                        </td>
+                        <td>
+                            @series.TypeOfSeries
+                        </td>
+                        <td>
+                            @series.SeriesCategory
+                        </td>
+                        <td>
+                            @series.SeriesType
+                        </td>
+                        <td>
+                            @series.SeriesLanguage
+                        </td>
+                        <td>
+                            @{
+                                string shortDesc = series.SeriesDescription.Length > 50
+                                ? series.SeriesDescription.Substring(0, 50) + "..."
+                                : series.SeriesDescription;
+                            }
+                            <span id="shortDesc_@series.SeriesID">@shortDesc</span>
+                            <span id="fullDesc_@series.SeriesID" style="display:none;">@series.SeriesDescription</span>
+                            <br>
+                            @if (series.SeriesDescription.Length > 50)
+                            {
+                                <a href="javascript:void(0);" class="text-info text-decoration-none" onclick="toggleDescription(@series.SeriesID)" id="toggleBtn_@series.SeriesID">More</a>
+                            }
+                        </td>
+                        <td>
+                            @series.SeriesDate
+                        </td>
+                        <td>
+                            @series.SeriesView
+                        </td>
+                        <td>
+
+                            <a class="btn btn-outline-warning" asp-controller="Series" asp-action="SeriesAddEdit" asp-route-SeriesID="@series.SeriesID" role="button">
+
+                                <h4>
+                                    <i class="ri-edit-2-line"></i>
+                                </h4>
+                            </a>
+
+                            <form method="post" asp-controller="Series" asp-action="SeriesDelete" style="display:inline;" onsubmit="return confirmDelete(event, this);">
+                                <input type="hidden" name="SeriesID" value="@series.SeriesID" />
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <h4>
+                                        <i class="ri-delete-bin-6-line"></i>
+                                    </h4>
+                                </button>
+                            </form>
+
+                        </td>
+                        <td>
+                            <a class="btn" asp-controller="Season" asp-action="SeriesWiseSeasonList" asp-route-SeriesID="@series.SeriesID" role="button"
+                               style="background-color: white; color: black; border: 1px solid black; margin-bottom: 5px;">
+
+                                <h6>
+                                    View Seasons
+                                </h6>
+                            </a>
+                            <a class="btn" asp-controller="Season" asp-action="SeasonAddEdit" asp-route-SeriesID="@series.SeriesID" role="button"
+                               style="background-color: lightblue; color: black; border: 1px solid black;">
+
+                                <h6>
+                                    Add Season
+                                </h6>
+                            </a>
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script>
+    function toggleDescription(SeriesID) {
+        var shortDesc = document.getElementById("shortDesc_" + SeriesID);
+        var fullDesc = document.getElementById("fullDesc_" + SeriesID);
+        var toggleBtn = document.getElementById("toggleBtn_" + SeriesID);
+
+        if (fullDesc.style.display === "none") {
+            fullDesc.style.display = "inline";
+            shortDesc.style.display = "none";
+            toggleBtn.innerText = "Less";
+        } else {
+            fullDesc.style.display = "none";
+            shortDesc.style.display = "inline";
+            toggleBtn.innerText = "More";
+        }
+    }
+</script>

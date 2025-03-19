@@ -1,0 +1,147 @@
+﻿
+@{
+    var movies = ViewBag.Movies as List<MovieModel>;
+    var topTenMovies = ViewBag.TopTenMovies as List<MovieModel>;
+    var latestMovies = ViewBag.LatestMovies as List<MovieModel>;
+}
+@{
+    ViewData["Title"] = "Movies";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Search Button with Icon -->
+<div class="d-flex justify-content-end">
+    <div class="search-bar col-3">
+        <form class="search-form d-flex align-items-center" method="GET" style="border-radius: 5px; border: 1px solid #ccc; padding: 5px; background-color: black;"
+              asp-controller="HomeMovie" asp-action="SearchMovie">
+            <!-- Search Input Field -->
+            <input type="text" name="query" placeholder="Search Name,Category,Language,Type"
+                   title="Enter search keyword" class="form-control-plaintext me-2 text-white"
+                   style="border: none; outline: none; border-radius: 5px; padding: 8px; font-size: 14px; background-color: black;">
+
+            <!-- Search Button -->
+            <button type="submit" title="Search" class="btn btn-outline-danger" style="border-radius: 5px; padding: 8px 15px; border: none;">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<h2 class="mb-3 mt-3">Latest Movies</h2>
+
+<div class="container-fluid">
+    <div class="owl-carousel owl-theme">
+        @foreach (MovieModel movie in latestMovies)
+        {
+            <div class="item">
+                <div class="card bg-black" onclick="incrementViews(@movie.MovieID)">
+                    <a asp-controller="HomeMovie" asp-action="SelectedMovie" asp-route-MovieID="@movie.MovieID">
+                        <img height="250" src="./assets/img/movie_img/@movie.MovieImage" />
+                    </a>
+                </div>
+            </div> 
+        }
+    </div>
+</div>
+
+<h2 class="mb-3 mt-5">Only On <span class="text-danger">MNMovies</span></h2>
+
+<div class="container-fluid">
+    <div class="owl-carousel owl-theme">
+        @foreach (MovieModel movie in movies)
+        {
+            @if (movie.TypeOfMovie == "Only On MNMovies")
+            {
+                <div class="item">
+                    <div class="card bg-black" onclick="incrementViews(@movie.MovieID)">
+                        <a asp-controller="HomeMovie" asp-action="SelectedMovie" asp-route-MovieID="@movie.MovieID">
+                            <img height="250" src="./assets/img/movie_img/@movie.MovieImage" />
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<h2 class="mb-3 mt-5">Animation Movies</h2>
+
+<div class="container-fluid">
+    <div class="owl-carousel owl-theme">
+        @foreach (MovieModel movie in movies)
+        {
+            @if (movie.TypeOfMovie == "Animation")
+            {
+                <div class="item">
+                    <div class="card bg-black" onclick="incrementViews(@movie.MovieID)">
+                        <a asp-controller="HomeMovie" asp-action="SelectedMovie" asp-route-MovieID="@movie.MovieID">
+                            <img height="250" src="./assets/img/movie_img/@movie.MovieImage" />
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<h2 class="mb-3 mt-5">Top 10 Movies</h2>
+
+<div class="container-fluid">
+    <div class="owl-carousel owl-theme">
+        @foreach (MovieModel movie in topTenMovies)
+        {
+            <div class="item">
+                <div class="card bg-black" onclick="incrementViews(@movie.MovieID)">
+                    <a asp-controller="HomeMovie" asp-action="SelectedMovie" asp-route-MovieID="@movie.MovieID">
+                        <img height="250" src="./assets/img/movie_img/@movie.MovieImage" />
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<!--Javascript Jquery-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--Owl Carousel min.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--Owl Carousel init-->
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: false,
+        margin: 10,
+        nav: true,
+        responsive: {
+            0:{
+                items: 1
+            },
+            600:{
+                items: 3
+            },
+            1000:{
+                items: 5
+            }
+        }
+    })
+</script>
+
+<script>
+    function incrementViews(MovieID) {
+        $.ajax({
+            url: `https://localhost:44301/api/Movie/IncrementViews/${MovieID}`,
+            method: "POST",
+            success: function(response) {
+                console.log(response.message);
+            },
+            error: function(xhr) {
+                console.error("Failed to increment views:", xhr.responseText);
+            }
+        });
+    }
+</script>
